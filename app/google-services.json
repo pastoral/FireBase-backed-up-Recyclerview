@@ -77,6 +77,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "321296325890-784oiaaj7gne1olv11slaf235olbjg9a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.munir.firelist",
+            "certificate_hash": "BADC9E7CE14BE59181066BF92852BA1E6D2830EA"
+          }
+        },
+        {
           "client_id": "321296325890-egjkkkfv7nv6b0ih728q3lhi87q85gtr.apps.googleusercontent.com",
           "client_type": 3
         }
