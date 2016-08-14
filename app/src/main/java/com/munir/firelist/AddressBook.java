@@ -1,5 +1,8 @@
 package com.munir.firelist;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by munirul.hoque on 8/11/2016.
  */
@@ -40,5 +43,13 @@ public class AddressBook {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public Map<String,Object> toMap(){
+        HashMap<String,Object> result = new HashMap<>();
+        result.put("name" , name);
+        result.put("address" , address);
+        result.put("url" , url);
+        return result;
     }
 }
