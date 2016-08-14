@@ -45,13 +45,15 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     }
     public static final String ADRESS = "addresses";
     private static final String TAG = "MainActivity";
+    public int pos = 0;
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLinearLayoutManager;
     private DatabaseReference mDatabaseReference;
     private FirebaseRecyclerAdapter<AddressBook,AddressViewHolder> mFirebaseAdapter;
     public interface ClickListener {
-        void onItemClick(int position, View v);
-        void onItemLongClick(int position, View v);
+        void onClick(View view, int position);
+
+        void onLongClick(View view, int position);
     }
 
 
@@ -72,18 +74,29 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 mDatabaseReference.child(ADRESS)
         ) {
             @Override
-            protected void populateViewHolder(AddressViewHolder viewHolder, AddressBook model,  int position) {
+            protected void populateViewHolder(final AddressViewHolder viewHolder, final AddressBook model, int position) {
                 viewHolder.textName.setText(model.getName());
                 viewHolder.textAddress.setText(model.getAddress());
                 viewHolder.textUrl.setText(model.getUrl());
-                final int pos = position;
+                 pos = position;
 
-                viewHolder.mView.setOnClickListener(new View.OnClickListener(){
+               /* viewHolder.mView.setOnClickListener(new View.OnClickListener(){
                     @Override
                     public void onClick(View v) {
                         Log.w(TAG, "You clicked on " + pos);
                     }
-                });
+                });*/
+                mRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), mRecyclerView, new ClickListener(){
+                    @Override
+                    public void onClick(View view, int position) {
+                        Toast.makeText(getApplicationContext(),mFirebaseAdapter.getItem(position).getName() + " is selected!", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onLongClick(View view, int position) {
+
+                    }
+                } ));
 
             }
 
@@ -105,7 +118,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         mRecyclerView.setAdapter(mFirebaseAdapter);
+
 
     }
 
